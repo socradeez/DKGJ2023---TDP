@@ -6,8 +6,6 @@ func _ready():
 	var player = $Player
 	var platforms = get_tree().get_nodes_in_group("RedPlatforms")
 	
-	for platform in platforms:
-		player.connect("")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
