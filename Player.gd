@@ -9,6 +9,10 @@ var screen_size # Size of the game window.
 var on_ground = false
 var jump_from_dp = false
 var platform_velocity = 0
+var wall_slide_speed_max = 100
+var wall_jump_strength = Vector2(150, -300) # X for away from the wall, Y for upward
+var can_wall_jump = false
+var wall_dir = 0 # -1 for left, 1 for right
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -17,13 +21,27 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
+	velocity.y += gravity * delta
 	if Input.is_action_just_pressed('speed_change'):
 		change_speed.emit()
 	on_ground = is_on_floor()
+	var is_on_wall = is_on_wall()
 	if not on_ground:
 		$AnimatedSprite2D.animation = "jump"
+		
+	if is_on_wall and velocity.y > 0:
+		# Wall sliding
+		$AnimatedSprite2D.animation = "jump"
+		velocity.y = min(velocity.y, wall_slide_speed_max)
+		can_wall_jump = true
+		wall_dir = get_wall_direction()
+	else:
+		can_wall_jump = false
+
+	if can_wall_jump and Input.is_action_just_pressed("jump"):
+		perform_wall_jump()
 	# vertical movement velocity (down)
-	velocity.y += gravity * delta
+
 	# horizontal movement processing (left, right)
 	
 	if on_ground:
@@ -48,4 +66,19 @@ func horizontal_movement():
 		$AnimatedSprite2D.stop()
 	# horizontal velocity which moves player left or right based on input
 	velocity.x = horizontal_input * speed
+	
+func get_wall_direction():
+	var left_ray = $RayCast2D_Left
+	var right_ray = $RayCast2D_Right
+
+	if left_ray.is_colliding():
+		return -1
+	elif right_ray.is_colliding():
+		return 1
+	else:
+		return 0  # Not on a wall
+
+func perform_wall_jump():
+	velocity.x = -wall_dir * wall_jump_strength.x
+	velocity.y = wall_jump_strength.y
 
