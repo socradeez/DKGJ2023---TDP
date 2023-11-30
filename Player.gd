@@ -2,9 +2,9 @@ extends CharacterBody2D
 
 signal change_speed
 
-@export var speed = 100 # How fast the player will move (pixels/sec).
+@export var speed = 250 # How fast the player will move (pixels/sec).
 @export var gravity = 980
-@export var jump_strength = -300
+@export var jump_strength = -500
 var screen_size # Size of the game window.
 var on_ground = false
 var jump_from_dp = false
@@ -25,13 +25,14 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed('speed_change'):
 		change_speed.emit()
 	on_ground = is_on_floor()
+	print(on_ground)
 	var is_on_wall = is_on_wall()
 	if not on_ground:
-		$AnimatedSprite2D.animation = "jump"
+		$AnimatedSprite2D.animation = "Jump"
 		
 	if is_on_wall and velocity.y > 0:
 		# Wall sliding
-		$AnimatedSprite2D.animation = "jump"
+		$AnimatedSprite2D.animation = "Jump"
 		velocity.y = min(velocity.y, wall_slide_speed_max)
 		can_wall_jump = true
 		wall_dir = get_wall_direction()
@@ -57,13 +58,13 @@ func horizontal_movement():
 	# if keys are pressed it will return 1 for ui_right, -1 for ui_left, and 0 for neither
 	var horizontal_input = Input.get_action_strength("move_right") -  Input.get_action_strength("move_left")
 	if horizontal_input != 0:
-		$AnimatedSprite2D.animation = "walk"
+		$AnimatedSprite2D.animation = "Run"
 		$AnimatedSprite2D.flip_h = false
 		if horizontal_input < 0:
 			$AnimatedSprite2D.flip_h = true
 		$AnimatedSprite2D.play()
 	else:
-		$AnimatedSprite2D.stop()
+		$AnimatedSprite2D.animation = 'Idle'
 	# horizontal velocity which moves player left or right based on input
 	velocity.x = horizontal_input * speed
 	
