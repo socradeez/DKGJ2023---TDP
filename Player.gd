@@ -1,41 +1,54 @@
 extends CharacterBody2D
 
 signal change_speed
-
-@export var speed = 250 # How fast the player will move (pixels/sec).
-@export var gravity = 980
-@export var jump_strength = -500
+@export var max_speed = 500 # Max speed
+@export var acceleration_rate = 15 # Acceleration rate
+@export var deceleration_rate = 9 # Deceleration rate
+@export var gravity = 2200
+@export var jump_strength = -1024
+var current_speed = 0 # Current horizontal speed
 var screen_size # Size of the game window.
 var on_ground = false
 var jump_from_dp = false
 var platform_velocity = 0
 var wall_slide_speed_max = 100
-var wall_jump_strength = Vector2(150, -300) # X for away from the wall, Y for upward
+var wall_jump_strength = Vector2(600, -1024) # X for away from the wall, Y for upward
 var can_wall_jump = false
 var wall_dir = 0 # -1 for left, 1 for right
+enum MovementState {IDLE, RUNNING, SLIDING}
+var movement_state = MovementState.IDLE
+var previous_horizontal_input = 0
+var start_position
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	screen_size = get_viewport_rect().size
-
+	start_position = position  # Store the character's starting position
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	velocity.y += gravity * delta
+	if Input.is_action_just_pressed("reset_character"):
+		position = start_position
 	if Input.is_action_just_pressed('speed_change'):
 		change_speed.emit()
 	on_ground = is_on_floor()
-	print(on_ground)
-	var is_on_wall = is_on_wall()
-	if not on_ground:
-		$AnimatedSprite2D.animation = "Jump"
-		
-	if is_on_wall and velocity.y > 0:
+	var on_wall = get_wall_direction()
+
+	# Modify jump animation segments
+	if velocity.y < -425:
+		$AnimatedSprite2D.animation = "takeoff"
+	elif 0 > velocity.y and velocity.y > -425:
+		$AnimatedSprite2D.animation = "jump_top"
+	elif not on_ground and not is_on_wall():
+		$AnimatedSprite2D.animation = "flying_down"
+	if on_wall and velocity.y > 0:
 		# Wall sliding
-		$AnimatedSprite2D.animation = "Jump"
+		$AnimatedSprite2D.animation = "WallSlide"
 		velocity.y = min(velocity.y, wall_slide_speed_max)
-		can_wall_jump = true
 		wall_dir = get_wall_direction()
+		if wall_dir != 0:
+			can_wall_jump = true
 	else:
 		can_wall_jump = false
 
@@ -46,27 +59,60 @@ func _physics_process(delta):
 	# horizontal movement processing (left, right)
 	
 	if on_ground:
-		horizontal_movement()
+		horizontal_movement(delta)
 		if Input.is_action_just_pressed("jump"):
 			velocity.y = jump_strength
 	# Otherwise, retain horizontal velocity
+	else:
+		$AnimatedSprite2D.play()
 		
 	#applies movement
 	move_and_slide()
 
-func horizontal_movement():
-	# if keys are pressed it will return 1 for ui_right, -1 for ui_left, and 0 for neither
-	var horizontal_input = Input.get_action_strength("move_right") -  Input.get_action_strength("move_left")
+
+func horizontal_movement(delta):
+	var horizontal_input = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
+	var target_speed_x = max_speed * horizontal_input
+	var speed_difference = target_speed_x - velocity.x
+	var some_threshold = 400
+
+	# State transition logic
+	if horizontal_input == 0 and movement_state != MovementState.SLIDING:
+		movement_state = MovementState.IDLE
+	elif horizontal_input != 0:
+		if (movement_state == MovementState.SLIDING and abs(velocity.x) > some_threshold):
+			movement_state = MovementState.SLIDING
+		else:
+			movement_state = MovementState.RUNNING
+
+	# Movement logic based on state
+	match movement_state:
+		MovementState.IDLE:
+			velocity.x = lerp(velocity.x, 0.0, delta * deceleration_rate)
+		MovementState.RUNNING:
+			velocity.x = lerp(velocity.x, target_speed_x, delta * acceleration_rate)
+		MovementState.SLIDING:
+			velocity.x = lerp(velocity.x, sign(previous_horizontal_input) * some_threshold, delta * deceleration_rate)
+
+	# Animation logic based on state
+	match movement_state:
+		MovementState.IDLE:
+			$AnimatedSprite2D.animation = "Idle"
+		MovementState.RUNNING:
+			$AnimatedSprite2D.animation = "Run"
+		MovementState.SLIDING:
+			$AnimatedSprite2D.animation = "SlideTurn"
+
+	# Flip sprite based on direction
 	if horizontal_input != 0:
-		$AnimatedSprite2D.animation = "Run"
-		$AnimatedSprite2D.flip_h = false
-		if horizontal_input < 0:
-			$AnimatedSprite2D.flip_h = true
-		$AnimatedSprite2D.play()
-	else:
-		$AnimatedSprite2D.animation = 'Idle'
-	# horizontal velocity which moves player left or right based on input
-	velocity.x = horizontal_input * speed
+		$AnimatedSprite2D.flip_h = horizontal_input < 0
+
+	# Ensure the animation is playing
+	$AnimatedSprite2D.play()
+
+	# Store the previous input for comparison in the next frame
+	previous_horizontal_input = horizontal_input
+	
 	
 func get_wall_direction():
 	var left_ray = $RayCast2D_Left
@@ -80,6 +126,32 @@ func get_wall_direction():
 		return 0  # Not on a wall
 
 func perform_wall_jump():
-	velocity.x = -wall_dir * wall_jump_strength.x
+	# Determine the direction to jump away from the wall
+	var jump_direction = -get_wall_direction()
+	if jump_direction == 0:
+		jump_direction = -sign(velocity.x)  # Fallback if wall direction can't be determined
+
+	# Apply wall jump strength
+	velocity.x = jump_direction * wall_jump_strength.x
 	velocity.y = wall_jump_strength.y
+	var wall_velocity = get_wall_velocity(jump_direction)
+	print(wall_velocity)
+	velocity += wall_velocity
+	$AnimatedSprite2D.flip_h = jump_direction < 0
+	previous_horizontal_input = -previous_horizontal_input
+	
+func get_wall_velocity(jump_direction):
+	var wall = get_colliding_wall(jump_direction)
+	print(wall)
+	if wall and wall is AnimatableBody2D:
+		return wall.get_velocity()
+	return Vector2.ZERO
+
+func get_colliding_wall(jump_direction):
+	# Return the colliding wall object. This depends on your game's setup.
+	# For example, you might use a RayCast2D that points in the direction of the wall.
+	if jump_direction == -1:
+		return $RayCast2D_Left.get_collider()
+	elif jump_direction == 1:
+		return $RayCast2D_Right.get_collider()
 
