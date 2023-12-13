@@ -7,7 +7,7 @@ signal change_speed_red
 @export var deceleration_rate = 9 # Deceleration rate
 @export var gravity = 2200
 @export var jump_strength = -1024
-@export var coyote_time = 0.1
+@export var coyote_time = 0.05
 @export var jump_buffer_time = 0.05
 var coyote_timer = 0.0
 var jump_buffer_timer = 0.0
@@ -25,6 +25,8 @@ enum MovementState {IDLE, RUNNING, SLIDING}
 var movement_state = MovementState.IDLE
 var previous_horizontal_input = 0
 var start_position
+var wall_jump_delay = 0.2
+var wall_jump_timer = 0.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -52,6 +54,9 @@ func _physics_process(delta):
 		$AnimatedSprite2D.animation = "jump_top"
 	elif not on_ground and not is_on_wall():
 		$AnimatedSprite2D.animation = "flying_down"
+	elif not on_ground:
+		wall_jump_timer += delta
+		
 	if on_wall and velocity.y > 0:
 		# Wall sliding
 		$AnimatedSprite2D.animation = "WallSlide"
@@ -61,6 +66,7 @@ func _physics_process(delta):
 			can_wall_jump = true
 	else:
 		can_wall_jump = false
+		wall_jump_timer = 0.0
 
 	if can_wall_jump and Input.is_action_just_pressed("jump"):
 		perform_wall_jump()
@@ -136,19 +142,20 @@ func get_wall_direction():
 		return 0  # Not on a wall
 
 func perform_wall_jump():
-	# Determine the direction to jump away from the wall
-	var jump_direction = -get_wall_direction()
-	if jump_direction == 0:
-		jump_direction = -sign(velocity.x)  # Fallback if wall direction can't be determined
+	if wall_jump_timer > coyote_time:
+		# Determine the direction to jump away from the wall
+		var jump_direction = -get_wall_direction()
+		if jump_direction == 0:
+			jump_direction = -sign(velocity.x)  # Fallback if wall direction can't be determined
 
-	# Apply wall jump strength
-	velocity.x = jump_direction * wall_jump_strength.x
-	velocity.y = wall_jump_strength.y
-	var wall_velocity = get_wall_velocity(jump_direction)
-	print(wall_velocity)
-	velocity += wall_velocity
-	$AnimatedSprite2D.flip_h = jump_direction < 0
-	previous_horizontal_input = -previous_horizontal_input
+		# Apply wall jump strength
+		velocity.x = jump_direction * wall_jump_strength.x
+		velocity.y = wall_jump_strength.y
+		var wall_velocity = get_wall_velocity(jump_direction)
+		print(wall_velocity)
+		velocity += wall_velocity
+		$AnimatedSprite2D.flip_h = jump_direction < 0
+		previous_horizontal_input = -previous_horizontal_input
 	
 func get_wall_velocity(jump_direction):
 	var wall = get_colliding_wall(jump_direction)

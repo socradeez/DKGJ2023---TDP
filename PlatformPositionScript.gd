@@ -1,10 +1,11 @@
 extends PathFollow2D
 
 @export var max_speed = 1.0
+@export var speed_multiplier = 2.0
 var current_speed = 0.0
 var direction = 1
 var high_speed = false
-var smoothing_factor = 0.02  # Adjust for more/less smoothing
+var smoothing_factor = 0.015  # Adjust for more/less smoothing
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -52,9 +53,9 @@ func get_velocity():
 
 func _on_player_change_speed_red():
 	if high_speed:
-		max_speed /= 2
+		max_speed /= speed_multiplier
 		high_speed = false
 	else:
-		max_speed *= 2
+		max_speed *= speed_multiplier
 		high_speed = true
 
