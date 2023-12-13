@@ -432,7 +432,6 @@ metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BPlatform2Path/BPlatform2Position/AB2DPlatform"]
 position = Vector2(-0.0673828, -63.1729)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_x8gwc")
 script = SubResource("GDScript_lerbe")
 
@@ -463,7 +462,6 @@ metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BPlatform1Path/BPlatform1Position/AB2DPlatform"]
 position = Vector2(0.42334, -63.9536)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_cy2o3")
 script = SubResource("GDScript_qwht8")
 
@@ -475,7 +473,7 @@ layer_0/tile_data = PackedInt32Array(-2, 2, 6, -1, 65538, 6, -65536, 65538, 6, -
 
 [node name="Player" type="CharacterBody2D" parent="."]
 z_index = 4
-position = Vector2(8543, -355)
+position = Vector2(-4159, -149)
 floor_constant_speed = true
 safe_margin = 0.1
 script = ExtResource("2_m0yii")
@@ -565,7 +563,6 @@ metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BPlatform3Path/BPlatform3Position/AB2DPlatform"]
 position = Vector2(-0.358398, -64.9176)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_5c7b0")
 script = ExtResource("6_8yqqt")
 
@@ -581,7 +578,7 @@ curve = SubResource("Curve2D_54u8j")
 metadata/_edit_group_ = true
 
 [node name="BPlatform5Position" type="PathFollow2D" parent="BPlatform5Path"]
-position = Vector2(-411, -349.501)
+position = Vector2(-411, -349.5)
 rotation = -0.00294117
 progress = 923.5
 rotates = false
@@ -597,7 +594,6 @@ metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BPlatform5Path/BPlatform5Position/AnimatableBody2D"]
 position = Vector2(63.3105, 0.594177)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_fpnq4")
 script = ExtResource("6_8yqqt")
 
@@ -628,7 +624,6 @@ metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RPlatform1Path/RPlatform1Position/AB2DPlatform"]
 position = Vector2(0, -66.9463)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_64jn5")
 one_way_collision = true
 script = SubResource("GDScript_0ygxx")
@@ -647,7 +642,7 @@ curve = SubResource("Curve2D_dt1kq")
 metadata/_edit_group_ = true
 
 [node name="RPlatform2Position" type="PathFollow2D" parent="RPlatform2Path"]
-position = Vector2(634.582, -94.0412)
+position = Vector2(634.587, -94.0412)
 progress = 1457.53
 rotates = false
 loop = false
@@ -661,7 +656,6 @@ metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RPlatform2Path/RPlatform2Position/AB2DPlatform"]
 position = Vector2(-0.382813, -63.3958)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_11mns")
 script = SubResource("GDScript_d4ud1")
 

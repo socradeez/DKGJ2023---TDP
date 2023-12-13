@@ -27,6 +27,7 @@ var previous_horizontal_input = 0
 var start_position
 var wall_jump_delay = 0.2
 var wall_jump_timer = 0.0
+var checkpoint2 = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -35,6 +36,9 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
+	if position.x > 13600 and checkpoint2 == false:
+		start_position = Vector2(13600, -97)
+		checkpoint2 = true
 	velocity.y += gravity * delta
 	if Input.is_action_just_pressed("reset_character"):
 		position = start_position
