@@ -35,16 +35,26 @@ func _process(delta):
 		progress_ratio = 0.0
 		direction *= -1
 
-func _on_player_change_speed():
+func _on_player_change_speed_blue():
 	if high_speed:
 		max_speed /= 2
 		high_speed = false
 	else:
 		max_speed *= 2
 		high_speed = true
-	print('sped up')
+
 	
 func get_velocity():
 	var old_pos = global_position
 	var new_pos = $Path.curve.interpolate_baked(progress_ratio + current_speed * get_process_delta_time(), true)
 	return (new_pos - old_pos) / get_process_delta_time()
+
+
+func _on_player_change_speed_red():
+	if high_speed:
+		max_speed /= 2
+		high_speed = false
+	else:
+		max_speed *= 2
+		high_speed = true
+

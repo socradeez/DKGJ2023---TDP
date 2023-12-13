@@ -1,17 +1,23 @@
 extends CharacterBody2D
 
-signal change_speed
+signal change_speed_blue
+signal change_speed_red
 @export var max_speed = 500 # Max speed
 @export var acceleration_rate = 15 # Acceleration rate
 @export var deceleration_rate = 9 # Deceleration rate
 @export var gravity = 2200
 @export var jump_strength = -1024
+@export var coyote_time = 0.1
+@export var jump_buffer_time = 0.05
+var coyote_timer = 0.0
+var jump_buffer_timer = 0.0
+var jump_buffered = false
 var current_speed = 0 # Current horizontal speed
 var screen_size # Size of the game window.
 var on_ground = false
 var jump_from_dp = false
 var platform_velocity = 0
-var wall_slide_speed_max = 100
+var wall_slide_speed_max = 275
 var wall_jump_strength = Vector2(600, -1024) # X for away from the wall, Y for upward
 var can_wall_jump = false
 var wall_dir = 0 # -1 for left, 1 for right
@@ -30,10 +36,14 @@ func _physics_process(delta):
 	velocity.y += gravity * delta
 	if Input.is_action_just_pressed("reset_character"):
 		position = start_position
-	if Input.is_action_just_pressed('speed_change'):
-		change_speed.emit()
+	if Input.is_action_just_pressed('speed_change_blue'):
+		change_speed_blue.emit()
+	if Input.is_action_just_pressed('speed_change_red'):
+		change_speed_red.emit()
 	on_ground = is_on_floor()
 	var on_wall = get_wall_direction()
+	handle_coyote_time(delta)
+	handle_jump_buffer(delta)
 
 	# Modify jump animation segments
 	if velocity.y < -425:
@@ -61,7 +71,7 @@ func _physics_process(delta):
 	if on_ground:
 		horizontal_movement(delta)
 		if Input.is_action_just_pressed("jump"):
-			velocity.y = jump_strength
+			perform_jump()
 	# Otherwise, retain horizontal velocity
 	else:
 		$AnimatedSprite2D.play()
@@ -154,4 +164,34 @@ func get_colliding_wall(jump_direction):
 		return $RayCast2D_Left.get_collider()
 	elif jump_direction == 1:
 		return $RayCast2D_Right.get_collider()
+		
+func handle_coyote_time(delta):
+	if on_ground:
+		coyote_timer = 0
+	else:
+		coyote_timer += delta
 
+	if coyote_timer < coyote_time and jump_buffered:
+		perform_jump()
+		
+func handle_jump_buffer(delta):
+	if jump_buffered:
+		jump_buffer_timer += delta
+		if jump_buffer_timer >= jump_buffer_time:
+			jump_buffered = false
+
+	if Input.is_action_just_pressed("jump"):
+		if on_ground or coyote_timer < coyote_time:
+			perform_jump()
+		else:
+			jump_buffered = true
+			jump_buffer_timer = 0
+			
+func perform_jump():
+	velocity.y = jump_strength
+	jump_buffered = false # Reset jump buffer
+
+func _on_area_2d_body_entered(body):
+	position = Vector2(8046, -97)
+	start_position = position
+	
