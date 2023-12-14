@@ -223,3 +223,8 @@ func get_floor_velocity():
 func _on_end_flag_area_body_entered(body):
 	var endmessage = get_node('../Label4')
 	endmessage.z_index = 4
+
+
+func _on_area_2d_2_body_entered(body):
+	var stmessage = get_node("../STLabel")
+	stmessage.z_index = 4
