@@ -1,11 +1,12 @@
-[gd_scene load_steps=61 format=3 uid="uid://djmvd3egljgbg"]
+[gd_scene load_steps=53 format=3 uid="uid://djmvd3egljgbg"]
 
 [ext_resource type="Script" path="res://Player.gd" id="2_m0yii"]
-[ext_resource type="Texture2D" uid="uid://cm506ssm047te" path="res://spriteSheetV02.png" id="2_nmv4r"]
+[ext_resource type="Texture2D" uid="uid://norobhmqr6q7" path="res://GJspriteSheetV03.png" id="5_025em"]
 [ext_resource type="TileSet" uid="uid://dgjjaxcw22uh5" path="res://DemoTilesetNoPhysics.tres" id="5_hhwt4"]
 [ext_resource type="TileSet" uid="uid://ct2fcmwqejm26" path="res://DemoTileset.tres" id="5_y0fha"]
 [ext_resource type="Script" path="res://platformcollide.gd" id="6_8yqqt"]
 [ext_resource type="Script" path="res://PlatformPositionScript.gd" id="7_5w85n"]
+[ext_resource type="Script" path="res://EndFlag.gd" id="9_mq7o2"]
 [ext_resource type="Script" path="res://CB2DPlatformAnimatable.gd" id="9_rmxo4"]
 [ext_resource type="Script" path="res://flag1Area.gd" id="12_emu3u"]
 
@@ -37,7 +38,7 @@ func get_velocity():
 
 [sub_resource type="Curve2D" id="Curve2D_ylg40"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 210.82, -252.793, 0, 0, 0, 0, 594.361, -253.8)
+"points": PackedVector2Array(0, 0, 0, 0, 177.8, -233.657, 0, 0, 0, 0, 641.775, -233.657)
 }
 point_count = 2
 
@@ -61,148 +62,108 @@ func get_velocity():
 	return('ping')	
 "
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_l2hnu"]
-atlas = ExtResource("2_nmv4r")
+[sub_resource type="AtlasTexture" id="AtlasTexture_31xmt"]
+atlas = ExtResource("5_025em")
 region = Rect2(0, 512, 256, 256)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_swcla"]
-atlas = ExtResource("2_nmv4r")
+[sub_resource type="AtlasTexture" id="AtlasTexture_pivvx"]
+atlas = ExtResource("5_025em")
 region = Rect2(256, 512, 256, 256)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_fprw6"]
-atlas = ExtResource("2_nmv4r")
+[sub_resource type="AtlasTexture" id="AtlasTexture_bwy7v"]
+atlas = ExtResource("5_025em")
 region = Rect2(512, 512, 256, 256)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_sw4xl"]
-atlas = ExtResource("2_nmv4r")
+[sub_resource type="AtlasTexture" id="AtlasTexture_68lon"]
+atlas = ExtResource("5_025em")
 region = Rect2(768, 512, 256, 256)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ke8f8"]
-atlas = ExtResource("2_nmv4r")
-region = Rect2(0, 256, 256, 256)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dgaqs"]
-atlas = ExtResource("2_nmv4r")
-region = Rect2(256, 256, 256, 256)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_yoe6n"]
-atlas = ExtResource("2_nmv4r")
-region = Rect2(512, 256, 256, 256)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_w6dow"]
-atlas = ExtResource("2_nmv4r")
-region = Rect2(768, 256, 256, 256)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_esieu"]
-atlas = ExtResource("2_nmv4r")
-region = Rect2(1024, 256, 256, 256)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_bfr07"]
-atlas = ExtResource("2_nmv4r")
-region = Rect2(1280, 256, 256, 256)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_i51k0"]
-atlas = ExtResource("2_nmv4r")
-region = Rect2(1536, 256, 256, 256)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gd7lc"]
-atlas = ExtResource("2_nmv4r")
-region = Rect2(1792, 256, 256, 256)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jikh3"]
-atlas = ExtResource("2_nmv4r")
+[sub_resource type="AtlasTexture" id="AtlasTexture_whjyg"]
+atlas = ExtResource("5_025em")
 region = Rect2(1536, 0, 256, 256)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ux63g"]
-atlas = ExtResource("2_nmv4r")
+[sub_resource type="AtlasTexture" id="AtlasTexture_74jpu"]
+atlas = ExtResource("5_025em")
 region = Rect2(1792, 0, 256, 256)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_7byio"]
-atlas = ExtResource("2_nmv4r")
+[sub_resource type="AtlasTexture" id="AtlasTexture_cr2np"]
+atlas = ExtResource("5_025em")
 region = Rect2(0, 0, 256, 256)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vyy31"]
-atlas = ExtResource("2_nmv4r")
+[sub_resource type="AtlasTexture" id="AtlasTexture_ipy10"]
+atlas = ExtResource("5_025em")
 region = Rect2(256, 0, 256, 256)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mmpb6"]
-atlas = ExtResource("2_nmv4r")
+[sub_resource type="AtlasTexture" id="AtlasTexture_devqu"]
+atlas = ExtResource("5_025em")
 region = Rect2(512, 0, 256, 256)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wmit3"]
-atlas = ExtResource("2_nmv4r")
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ppl2"]
+atlas = ExtResource("5_025em")
 region = Rect2(768, 0, 256, 256)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_hv710"]
-atlas = ExtResource("2_nmv4r")
+[sub_resource type="AtlasTexture" id="AtlasTexture_51gdm"]
+atlas = ExtResource("5_025em")
 region = Rect2(1024, 0, 256, 256)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_cknh8"]
-atlas = ExtResource("2_nmv4r")
+[sub_resource type="AtlasTexture" id="AtlasTexture_nkv3a"]
+atlas = ExtResource("5_025em")
 region = Rect2(1280, 0, 256, 256)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_1smx7"]
-atlas = ExtResource("2_nmv4r")
-region = Rect2(0, 1024, 256, 256)
+[sub_resource type="AtlasTexture" id="AtlasTexture_mmpry"]
+atlas = ExtResource("5_025em")
+region = Rect2(256, 768, 236, 256)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_tllq8"]
-atlas = ExtResource("2_nmv4r")
-region = Rect2(256, 1024, 256, 256)
+[sub_resource type="AtlasTexture" id="AtlasTexture_d1w02"]
+atlas = ExtResource("5_025em")
+region = Rect2(0, 768, 236, 256)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qdua3"]
-atlas = ExtResource("2_nmv4r")
-region = Rect2(0, 768, 256, 256)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dqgbd"]
-atlas = ExtResource("2_nmv4r")
-region = Rect2(256, 768, 256, 256)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rhuw3"]
-atlas = ExtResource("2_nmv4r")
-region = Rect2(1280, 256, 256, 256)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6on82"]
-atlas = ExtResource("2_nmv4r")
+[sub_resource type="AtlasTexture" id="AtlasTexture_xoqhj"]
+atlas = ExtResource("5_025em")
 region = Rect2(1536, 256, 256, 256)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_um48j"]
-atlas = ExtResource("2_nmv4r")
+[sub_resource type="AtlasTexture" id="AtlasTexture_51yi2"]
+atlas = ExtResource("5_025em")
 region = Rect2(1792, 256, 256, 256)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8oqin"]
-atlas = ExtResource("2_nmv4r")
+[sub_resource type="AtlasTexture" id="AtlasTexture_txdx3"]
+atlas = ExtResource("5_025em")
 region = Rect2(768, 256, 256, 256)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_s112t"]
-atlas = ExtResource("2_nmv4r")
+[sub_resource type="AtlasTexture" id="AtlasTexture_fgjda"]
+atlas = ExtResource("5_025em")
 region = Rect2(1024, 256, 256, 256)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_xqamt"]
-atlas = ExtResource("2_nmv4r")
+[sub_resource type="AtlasTexture" id="AtlasTexture_24top"]
+atlas = ExtResource("5_025em")
+region = Rect2(1280, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d03iw"]
+atlas = ExtResource("5_025em")
 region = Rect2(0, 256, 256, 256)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_x053r"]
-atlas = ExtResource("2_nmv4r")
+[sub_resource type="AtlasTexture" id="AtlasTexture_fsi38"]
+atlas = ExtResource("5_025em")
 region = Rect2(256, 256, 256, 256)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_rtpbo"]
-atlas = ExtResource("2_nmv4r")
+[sub_resource type="AtlasTexture" id="AtlasTexture_otkfx"]
+atlas = ExtResource("5_025em")
 region = Rect2(512, 256, 256, 256)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mhgah"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_l2hnu")
+"texture": SubResource("AtlasTexture_31xmt")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_swcla")
+"texture": SubResource("AtlasTexture_pivvx")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_fprw6")
+"texture": SubResource("AtlasTexture_bwy7v")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_sw4xl")
+"texture": SubResource("AtlasTexture_68lon")
 }],
 "loop": true,
 "name": &"Idle",
@@ -210,79 +171,44 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ke8f8")
+"texture": SubResource("AtlasTexture_whjyg")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_dgaqs")
+"texture": SubResource("AtlasTexture_74jpu")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_yoe6n")
+"texture": SubResource("AtlasTexture_cr2np")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_w6dow")
+"texture": SubResource("AtlasTexture_ipy10")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_esieu")
+"texture": SubResource("AtlasTexture_devqu")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_bfr07")
+"texture": SubResource("AtlasTexture_4ppl2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_i51k0")
+"texture": SubResource("AtlasTexture_51gdm")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_gd7lc")
-}],
-"loop": true,
-"name": &"Jump",
-"speed": 8.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jikh3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ux63g")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7byio")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vyy31")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_mmpb6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wmit3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hv710")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_cknh8")
+"texture": SubResource("AtlasTexture_nkv3a")
 }],
 "loop": true,
 "name": &"Run",
 "speed": 10.0
 }, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1smx7")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tllq8")
-}],
+"frames": [],
 "loop": true,
 "name": &"SlideTurn",
 "speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_qdua3")
+"texture": SubResource("AtlasTexture_mmpry")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_dqgbd")
+"texture": SubResource("AtlasTexture_d1w02")
 }],
 "loop": true,
 "name": &"WallSlide",
@@ -290,13 +216,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_rhuw3")
+"texture": SubResource("AtlasTexture_xoqhj")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_6on82")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_um48j")
+"texture": SubResource("AtlasTexture_51yi2")
 }],
 "loop": true,
 "name": &"flying_down",
@@ -304,10 +227,13 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_8oqin")
+"texture": SubResource("AtlasTexture_txdx3")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_s112t")
+"texture": SubResource("AtlasTexture_fgjda")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_24top")
 }],
 "loop": true,
 "name": &"jump_top",
@@ -315,17 +241,17 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_xqamt")
+"texture": SubResource("AtlasTexture_d03iw")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_x053r")
+"texture": SubResource("AtlasTexture_fsi38")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_rtpbo")
+"texture": SubResource("AtlasTexture_otkfx")
 }],
 "loop": true,
 "name": &"takeoff",
-"speed": 10.0
+"speed": 7.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_iap30"]
@@ -337,7 +263,7 @@ font_size = 72
 
 [sub_resource type="Curve2D" id="Curve2D_d4qfo"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 47.312, -252.57, 0, 0, 0, 0, 1075.99, -256.627)
+"points": PackedVector2Array(0, 0, 0, 0, 47.312, -252.57, 0, 0, 0, 0, 1113.26, -252.584)
 }
 point_count = 2
 
@@ -346,7 +272,7 @@ size = Vector2(258.781, 129.835)
 
 [sub_resource type="Curve2D" id="Curve2D_54u8j"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -411, 574, 0, 0, 0, 0, -411, -1273)
+"points": PackedVector2Array(0, 0, 0, 0, -411, 574, 0, 0, 0, 0, -412, -1370)
 }
 point_count = 2
 
@@ -355,7 +281,7 @@ size = Vector2(67.3811, 256.987)
 
 [sub_resource type="Curve2D" id="Curve2D_rhc58"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 2.86739, -7.62939e-06, 0, 0, 0, 0, 5.01758, -1647.28)
+"points": PackedVector2Array(0, 0, 0, 0, 2.15039, 132.878, 0, 0, 0, 0, 2.86719, -1717.27)
 }
 point_count = 2
 
@@ -376,12 +302,12 @@ func _process(delta):
 	pass
 
 func get_velocity():
-	return('ping')	
+	pass
 "
 
 [sub_resource type="Curve2D" id="Curve2D_dt1kq"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -822.939, -93.3188, 0, 0, 0, 0, 1224.37, -94.3335)
+"points": PackedVector2Array(0, 0, 0, 0, -917.563, -95.3477, 0, 0, 0, 0, 1268.82, -95.348)
 }
 point_count = 2
 
@@ -407,6 +333,9 @@ func get_velocity():
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5304t"]
 size = Vector2(71, 237)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hp612"]
+size = Vector2(56, 236)
 
 [node name="Level" type="Node2D"]
 metadata/_edit_horizontal_guides_ = []
@@ -439,17 +368,23 @@ script = SubResource("GDScript_lerbe")
 z_index = 3
 tile_set = ExtResource("5_hhwt4")
 format = 2
-layer_0/tile_data = PackedInt32Array(-2, 1, 6, -1, 65537, 6, -65536, 65537, 6, -65535, 131073, 6)
+layer_0/tile_data = PackedInt32Array(-2, 4, 6, -1, 65540, 6, -65536, 131076, 6, -65535, 196612, 6)
+
+[node name="TileMap_powered" type="TileMap" parent="BPlatform2Path/BPlatform2Position/AB2DPlatform"]
+scale = Vector2(1, 1)
+tile_set = ExtResource("5_y0fha")
+format = 2
+layer_0/tile_data = PackedInt32Array(-1, 65538, 7, -65536, 131074, 7, -2, 2, 7, -65535, 196610, 7)
 
 [node name="BPlatform1Path" type="Path2D" parent="."]
 z_index = 4
-position = Vector2(397, 507)
+position = Vector2(397, 490)
 scale = Vector2(1.1811, 0.992908)
 curve = SubResource("Curve2D_ylg40")
 metadata/_edit_group_ = true
 
 [node name="BPlatform1Position" type="PathFollow2D" parent="BPlatform1Path"]
-position = Vector2(210.82, -252.793)
+position = Vector2(177.8, -233.657)
 rotates = false
 loop = false
 script = ExtResource("7_5w85n")
@@ -469,27 +404,35 @@ script = SubResource("GDScript_qwht8")
 z_index = 3
 tile_set = ExtResource("5_hhwt4")
 format = 2
-layer_0/tile_data = PackedInt32Array(-2, 2, 6, -1, 65538, 6, -65536, 65538, 6, -65535, 131074, 6)
+layer_0/tile_data = PackedInt32Array(-2, 4, 6, -1, 65540, 6, -65536, 131076, 6, -65535, 196612, 6)
+
+[node name="TileMap_powered" type="TileMap" parent="BPlatform1Path/BPlatform1Position/AB2DPlatform"]
+scale = Vector2(1, 1)
+tile_set = ExtResource("5_y0fha")
+format = 2
+layer_0/tile_data = PackedInt32Array(-1, 65538, 7, -65536, 131074, 7, -2, 2, 7, -65535, 196610, 7)
 
 [node name="Player" type="CharacterBody2D" parent="."]
 z_index = 4
-position = Vector2(-4159, -149)
+position = Vector2(15986, -1630)
 floor_constant_speed = true
+platform_on_leave = 2
 safe_margin = 0.1
 script = ExtResource("2_m0yii")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
 sprite_frames = SubResource("SpriteFrames_mhgah")
-animation = &"Idle"
+animation = &"WallSlide"
+frame_progress = 0.141989
 
 [node name="RayCast2D_Left" type="RayCast2D" parent="Player"]
 position = Vector2(-49, 110)
 target_position = Vector2(-10, -52)
 
 [node name="RayCast2D_Right" type="RayCast2D" parent="Player"]
-position = Vector2(57, 115)
-target_position = Vector2(22, -52)
+position = Vector2(61, 113)
+target_position = Vector2(17, -48)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 position = Vector2(8, 19)
@@ -502,11 +445,15 @@ position_smoothing_speed = 10.0
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 
+[node name="RayCast2D_Down" type="RayCast2D" parent="Player"]
+position = Vector2(6, 105)
+target_position = Vector2(0, 39)
+
 [node name="DecorationTM" type="TileMap" parent="."]
 z_index = 3
 tile_set = ExtResource("5_hhwt4")
 format = 2
-layer_0/tile_data = PackedInt32Array(131055, 65538, 3, 131056, 65538, 3, 131057, 65538, 3, 131058, 65538, 3, 131059, 65538, 3, 65540, 196611, 3, 65542, 65538, 3, 65543, 65538, 3, 65544, 65538, 3, 65545, 65538, 3, 131051, 65538, 3, 131052, 65538, 3, 131054, 65538, 3, 131050, 65538, 3, 131053, 65538, 3, -65515, 458755, 3, 21, 458755, 4, -65514, 524291, 3, 22, 589827, 1, 65546, 262147, 4, 65547, 262147, 3, 65548, 65539, 3, 65549, 65539, 3, 65550, 131075, 3, 65541, 65539, 3, 65529, 262147, 2, 65535, 262147, 2, 65530, 393218, 1, 65531, 458754, 1, 65532, 655362, 1, 23, 655363, 1, 24, 655363, 1, 25, 655363, 1, 26, 393219, 2, 27, 393219, 2, 65614, 65538, 3, 65615, 65538, 3, 65616, 65538, 3, 65617, 65538, 3, 65618, 65538, 3, 65619, 65538, 3, 65620, 65538, 3, 65621, 65538, 3, 65622, 65538, 3, 65623, 65538, 3, -458634, 3, 4, -393098, 3, 4, -327562, 3, 4, -262026, 3, 4, -196490, 3, 4, -130954, 3, 4, -65418, 3, 4, 118, 3, 4, 65654, 3, 4, -655242, 3, 4, -589706, 3, 4, -524170, 3, 4, -720778, 3, 4, -1310585, 458755, 3, -1245049, 458755, 4, -1310584, 524291, 3, -1245048, 524291, 4, -1245074, 65539, 3, -1245073, 65539, 3, -1245072, 65539, 3, -1245071, 65539, 3, -1245070, 65539, 3, -1245069, 65539, 3, -1245068, 65539, 3, -1245067, 65539, 3, -1245066, 65539, 3, -1245065, 65539, 3, -1245064, 65539, 3, -1245063, 65539, 3, -1245062, 65539, 3, -1245061, 65539, 3, -1245060, 65539, 3, -1245059, 65539, 3, -1245058, 65539, 3, -1245057, 65539, 3, -1245056, 65539, 3, -1245055, 131075, 3, 18, 262146, 2, 19, 327682, 2, 20, 393218, 2, 65533, 720898, 2, 65496, 327682, 1, 65497, 458754, 2, 65498, 262146, 2, 65499, 327682, 2, 65501, 458754, 2, 65502, 262146, 2, 65505, 327682, 2, 65506, 393218, 2, 65507, 458754, 2, 65509, 393218, 1, 65510, 458754, 1, 65624, 65539, 3, 65625, 131075, 3, -1245075, 65539, 3, -1245076, 65539, 3, -1245077, 65539, 3)
+layer_0/tile_data = PackedInt32Array(131055, 65538, 3, 131056, 65538, 3, 131057, 65538, 3, 131058, 65538, 3, 131059, 65538, 3, 65540, 196611, 3, 65542, 65538, 3, 65543, 65538, 3, 65544, 65538, 3, 65545, 65538, 3, 131051, 65538, 3, 131052, 65538, 3, 131054, 65538, 3, 131050, 65538, 3, 131053, 65538, 3, -65515, 458755, 3, 21, 458755, 4, -65514, 524291, 3, 22, 589827, 1, 65546, 262147, 4, 65547, 262147, 3, 65548, 65539, 3, 65549, 65539, 3, 65550, 131075, 3, 65541, 65539, 3, 65529, 262147, 2, 65535, 262147, 2, 65530, 393218, 1, 65531, 458754, 1, 65532, 655362, 1, 23, 655363, 1, 24, 655363, 1, 25, 655363, 1, 26, 393219, 2, 27, 393219, 2, 65614, 65538, 3, 65615, 65538, 3, 65616, 65538, 3, 65617, 65538, 3, 65618, 65538, 3, 65619, 65538, 3, 65620, 65538, 3, 65621, 65538, 3, 65622, 65538, 3, 65623, 65538, 3, -458634, 3, 4, -393098, 3, 4, -327562, 3, 4, -262026, 3, 4, -196490, 3, 4, -130954, 3, 4, -65418, 3, 4, 118, 3, 4, 65654, 3, 4, -655242, 3, 4, -589706, 3, 4, -524170, 3, 4, -720778, 3, 4, -1310585, 458755, 3, -1245049, 458755, 4, -1310584, 524291, 3, -1245048, 524291, 4, -1245074, 65539, 3, -1245073, 65539, 3, -1245072, 65539, 3, -1245071, 65539, 3, -1245070, 65539, 3, -1245069, 65539, 3, -1245068, 65539, 3, -1245067, 65539, 3, -1245066, 65539, 3, -1245065, 65539, 3, -1245064, 65539, 3, -1245063, 65539, 3, -1245062, 65539, 3, -1245061, 65539, 3, -1245060, 65539, 3, -1245059, 65539, 3, -1245058, 65539, 3, -1245057, 65539, 3, -1245056, 65539, 3, -1245055, 131075, 3, 18, 262146, 2, 19, 327682, 2, 20, 393218, 2, 65533, 720898, 2, 65496, 327682, 1, 65497, 458754, 2, 65498, 262146, 2, 65499, 327682, 2, 65501, 458754, 2, 65502, 262146, 2, 65505, 327682, 2, 65506, 393218, 2, 65507, 458754, 2, 65509, 393218, 1, 65510, 458754, 1, 65624, 65539, 3, 65625, 131075, 3, -1245075, 65539, 3, -1245076, 65539, 3, -1245077, 65539, 3, -786314, 131076, 4)
 
 [node name="BackgroundTM" type="TileMap" parent="."]
 z_index = 2
@@ -570,7 +517,13 @@ script = ExtResource("6_8yqqt")
 z_index = 3
 tile_set = ExtResource("5_hhwt4")
 format = 2
-layer_0/tile_data = PackedInt32Array(-1, 3, 6, -65536, 131075, 6)
+layer_0/tile_data = PackedInt32Array(-1, 4, 6, -65536, 196612, 6)
+
+[node name="TileMap_powered" type="TileMap" parent="BPlatform3Path/BPlatform3Position/AB2DPlatform"]
+scale = Vector2(1, 1)
+tile_set = ExtResource("5_y0fha")
+format = 2
+layer_0/tile_data = PackedInt32Array(-1, 65538, 7, -65536, 131074, 7)
 
 [node name="BPlatform5Path" type="Path2D" parent="."]
 position = Vector2(12395, -575)
@@ -578,30 +531,37 @@ curve = SubResource("Curve2D_54u8j")
 metadata/_edit_group_ = true
 
 [node name="BPlatform5Position" type="PathFollow2D" parent="BPlatform5Path"]
-position = Vector2(-411, -349.5)
+position = Vector2(-411.55, -495.202)
 rotation = -0.00294117
-progress = 923.5
+progress = 1069.2
 rotates = false
 loop = false
 script = ExtResource("7_5w85n")
 max_speed = 0.4
 speed_multiplier = 2.2
 
-[node name="AnimatableBody2D" type="AnimatableBody2D" parent="BPlatform5Path/BPlatform5Position"]
+[node name="AB2DPlatform" type="AnimatableBody2D" parent="BPlatform5Path/BPlatform5Position"]
 position = Vector2(-65.1875, 63.8085)
+sync_to_physics = false
 script = ExtResource("9_rmxo4")
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BPlatform5Path/BPlatform5Position/AnimatableBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BPlatform5Path/BPlatform5Position/AB2DPlatform"]
 position = Vector2(63.3105, 0.594177)
 shape = SubResource("RectangleShape2D_fpnq4")
 script = ExtResource("6_8yqqt")
 
-[node name="TileMap" type="TileMap" parent="BPlatform5Path/BPlatform5Position/AnimatableBody2D"]
+[node name="TileMap" type="TileMap" parent="BPlatform5Path/BPlatform5Position/AB2DPlatform"]
 z_index = 3
 tile_set = ExtResource("5_y0fha")
 format = 2
-layer_0/tile_data = PackedInt32Array(-65536, 262145, 7, 0, 262145, 9)
+layer_0/tile_data = PackedInt32Array(-65536, 262146, 7, 0, 262146, 9)
+
+[node name="TileMap_powered" type="TileMap" parent="BPlatform5Path/BPlatform5Position/AB2DPlatform"]
+scale = Vector2(1, 1)
+tile_set = ExtResource("5_y0fha")
+format = 2
+layer_0/tile_data = PackedInt32Array(-65536, 327682, 7, 0, 327682, 9)
 
 [node name="RPlatform1Path" type="Path2D" parent="."]
 z_index = 4
@@ -611,7 +571,7 @@ curve = SubResource("Curve2D_rhc58")
 metadata/_edit_group_ = true
 
 [node name="RPlatform1Position" type="PathFollow2D" parent="RPlatform1Path"]
-position = Vector2(2.86739, -7.62939e-06)
+position = Vector2(2.15039, 132.878)
 rotates = false
 loop = false
 script = ExtResource("7_5w85n")
@@ -632,7 +592,13 @@ script = SubResource("GDScript_0ygxx")
 z_index = 3
 tile_set = ExtResource("5_hhwt4")
 format = 2
-layer_0/tile_data = PackedInt32Array(-2, 2, 8, -1, 65538, 8, -65536, 65538, 8, -65535, 131074, 8)
+layer_0/tile_data = PackedInt32Array(-2, 4, 8, -1, 65540, 8, -65536, 131076, 8, -65535, 196612, 8)
+
+[node name="TileMap_powered" type="TileMap" parent="RPlatform1Path/RPlatform1Position/AB2DPlatform"]
+scale = Vector2(1, 1)
+tile_set = ExtResource("5_y0fha")
+format = 2
+layer_0/tile_data = PackedInt32Array(-1, 65538, 9, -65536, 131074, 9, -2, 2, 9, -65535, 196610, 9)
 
 [node name="RPlatform2Path" type="Path2D" parent="."]
 z_index = 4
@@ -642,8 +608,8 @@ curve = SubResource("Curve2D_dt1kq")
 metadata/_edit_group_ = true
 
 [node name="RPlatform2Position" type="PathFollow2D" parent="RPlatform2Path"]
-position = Vector2(634.587, -94.0412)
-progress = 1457.53
+position = Vector2(1129.76, -95.348)
+progress = 2047.32
 rotates = false
 loop = false
 script = ExtResource("7_5w85n")
@@ -663,7 +629,13 @@ script = SubResource("GDScript_d4ud1")
 z_index = 3
 tile_set = ExtResource("5_hhwt4")
 format = 2
-layer_0/tile_data = PackedInt32Array(-1, 2, 8, -65536, 131074, 8)
+layer_0/tile_data = PackedInt32Array(-1, 65540, 8, -65536, 131076, 8)
+
+[node name="TileMap_powered" type="TileMap" parent="RPlatform2Path/RPlatform2Position/AB2DPlatform"]
+scale = Vector2(1, 1)
+tile_set = ExtResource("5_y0fha")
+format = 2
+layer_0/tile_data = PackedInt32Array(-1, 65538, 9, -65536, 131074, 9)
 
 [node name="Label3" type="Label" parent="."]
 z_index = 4
@@ -683,6 +655,29 @@ metadata/_edit_group_ = true
 position = Vector2(14.5, 59.5)
 shape = SubResource("RectangleShape2D_5304t")
 
+[node name="EndFlagArea" type="Area2D" parent="."]
+position = Vector2(17260, -2531)
+script = ExtResource("9_mq7o2")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EndFlagArea"]
+position = Vector2(42, 106)
+shape = SubResource("RectangleShape2D_hp612")
+
+[node name="Label4" type="Label" parent="."]
+offset_left = 17221.0
+offset_top = -2220.0
+offset_right = 18886.0
+offset_bottom = -1265.0
+text = "You did it!
+
+Thanks for playing!
+
+Level Design / Programming - Socradeez
+Art - JordanToons
+Special Thanks - Airow and MaddyInc"
+label_settings = SubResource("LabelSettings_spto2")
+
 [connection signal="change_speed_blue" from="Player" to="BPlatform2Path/BPlatform2Position" method="_on_player_change_speed_blue"]
 [connection signal="change_speed_blue" from="Player" to="BPlatform1Path/BPlatform1Position" method="_on_player_change_speed_blue"]
 [connection signal="change_speed_blue" from="Player" to="BPlatform3Path/BPlatform3Position" method="_on_player_change_speed_blue"]
@@ -690,3 +685,4 @@ shape = SubResource("RectangleShape2D_5304t")
 [connection signal="change_speed_red" from="Player" to="RPlatform1Path/RPlatform1Position" method="_on_player_change_speed_red"]
 [connection signal="change_speed_red" from="Player" to="RPlatform2Path/RPlatform2Position" method="_on_player_change_speed_red"]
 [connection signal="body_entered" from="Area2D" to="Player" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="EndFlagArea" to="Player" method="_on_end_flag_area_body_entered"]

@@ -28,6 +28,7 @@ var start_position
 var wall_jump_delay = 0.2
 var wall_jump_timer = 0.0
 var checkpoint2 = false
+var has_jumped = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -36,6 +37,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
+	var jumped = false
+	has_jumped = false  # Reset the flag at the beginning of each frame
 	if position.x > 13600 and checkpoint2 == false:
 		start_position = Vector2(13600, -97)
 		checkpoint2 = true
@@ -79,16 +82,17 @@ func _physics_process(delta):
 	# horizontal movement processing (left, right)
 	
 	if on_ground:
-		horizontal_movement(delta)
+		
 		if Input.is_action_just_pressed("jump"):
+			jumped = true
 			perform_jump()
+		horizontal_movement(delta)
 	# Otherwise, retain horizontal velocity
 	else:
 		$AnimatedSprite2D.play()
 		
 	#applies movement
 	move_and_slide()
-
 
 func horizontal_movement(delta):
 	var horizontal_input = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
@@ -146,24 +150,22 @@ func get_wall_direction():
 		return 0  # Not on a wall
 
 func perform_wall_jump():
-	if wall_jump_timer > coyote_time:
-		# Determine the direction to jump away from the wall
-		var jump_direction = -get_wall_direction()
-		if jump_direction == 0:
-			jump_direction = -sign(velocity.x)  # Fallback if wall direction can't be determined
+	# Determine the direction to jump away from the wall
+	var jump_direction = -get_wall_direction()
+	if jump_direction == 0:
+		jump_direction = -sign(velocity.x)  # Fallback if wall direction can't be determined
 
-		# Apply wall jump strength
-		velocity.x = jump_direction * wall_jump_strength.x
-		velocity.y = wall_jump_strength.y
-		var wall_velocity = get_wall_velocity(jump_direction)
-		print(wall_velocity)
-		velocity += wall_velocity
-		$AnimatedSprite2D.flip_h = jump_direction < 0
-		previous_horizontal_input = -previous_horizontal_input
+	# Apply wall jump strength
+	velocity.x = jump_direction * wall_jump_strength.x
+	velocity.y = wall_jump_strength.y
+	var wall_velocity = get_wall_velocity(jump_direction)
+	print(wall_velocity)
+	velocity += wall_velocity
+	$AnimatedSprite2D.flip_h = jump_direction < 0
+	previous_horizontal_input = -previous_horizontal_input
 	
 func get_wall_velocity(jump_direction):
 	var wall = get_colliding_wall(jump_direction)
-	print(wall)
 	if wall and wall is AnimatableBody2D:
 		return wall.get_velocity()
 	return Vector2.ZERO
@@ -182,8 +184,9 @@ func handle_coyote_time(delta):
 	else:
 		coyote_timer += delta
 
-	if coyote_timer < coyote_time and jump_buffered:
+	if coyote_timer < coyote_time and jump_buffered and not has_jumped:
 		perform_jump()
+		has_jumped = true
 		
 func handle_jump_buffer(delta):
 	if jump_buffered:
@@ -191,18 +194,32 @@ func handle_jump_buffer(delta):
 		if jump_buffer_timer >= jump_buffer_time:
 			jump_buffered = false
 
-	if Input.is_action_just_pressed("jump"):
+	if Input.is_action_just_pressed("jump") and not has_jumped:
 		if on_ground or coyote_timer < coyote_time:
 			perform_jump()
+			has_jumped = true
 		else:
 			jump_buffered = true
 			jump_buffer_timer = 0
 			
 func perform_jump():
-	velocity.y = jump_strength
-	jump_buffered = false # Reset jump buffer
+	if not has_jumped:
+		velocity.y = jump_strength
+		velocity += get_floor_velocity()
+		jump_buffered = false  # Reset jump buffer
+		has_jumped = true
 
 func _on_area_2d_body_entered(body):
-	position = Vector2(8046, -97)
+	position = Vector2(9000, -97)
 	start_position = position
 	
+func get_floor_velocity():
+	var floor = $RayCast2D_Down.get_collider()
+	if floor is AnimatableBody2D:
+		return floor.velocity
+	else:
+		return Vector2.ZERO
+	
+func _on_end_flag_area_body_entered(body):
+	var endmessage = get_node('../Label4')
+	endmessage.z_index = 4
