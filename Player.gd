@@ -8,7 +8,7 @@ signal change_speed_red
 @export var gravity = 2200
 @export var jump_strength = -1024
 @export var coyote_time = 0.05
-@export var jump_buffer_time = 0.05
+@export var jump_buffer_time = 0.075
 var coyote_timer = 0.0
 var jump_buffer_timer = 0.0
 var jump_buffered = false
@@ -29,6 +29,7 @@ var wall_jump_delay = 0.2
 var wall_jump_timer = 0.0
 var checkpoint2 = false
 var has_jumped = false
+var prev_floor_velocity = Vector2.ZERO
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -74,9 +75,9 @@ func _physics_process(delta):
 	else:
 		can_wall_jump = false
 		wall_jump_timer = 0.0
-
-	if can_wall_jump and Input.is_action_just_pressed("jump"):
+	if can_wall_jump and (Input.is_action_just_pressed("jump") or jump_buffered):
 		perform_wall_jump()
+		jump_buffered = false
 	# vertical movement velocity (down)
 
 	# horizontal movement processing (left, right)
@@ -159,7 +160,6 @@ func perform_wall_jump():
 	velocity.x = jump_direction * wall_jump_strength.x
 	velocity.y = wall_jump_strength.y
 	var wall_velocity = get_wall_velocity(jump_direction)
-	print(wall_velocity)
 	velocity += wall_velocity
 	$AnimatedSprite2D.flip_h = jump_direction < 0
 	previous_horizontal_input = -previous_horizontal_input
@@ -173,14 +173,15 @@ func get_wall_velocity(jump_direction):
 func get_colliding_wall(jump_direction):
 	# Return the colliding wall object. This depends on your game's setup.
 	# For example, you might use a RayCast2D that points in the direction of the wall.
-	if jump_direction == -1:
+	if jump_direction == 1:
 		return $RayCast2D_Left.get_collider()
-	elif jump_direction == 1:
+	elif jump_direction == -1:
 		return $RayCast2D_Right.get_collider()
 		
 func handle_coyote_time(delta):
 	if on_ground:
 		coyote_timer = 0
+		prev_floor_velocity = get_floor_velocity()
 	else:
 		coyote_timer += delta
 
@@ -219,7 +220,7 @@ func get_floor_velocity():
 		return floor.velocity
 	else:
 		return Vector2.ZERO
-	
+		
 func _on_end_flag_area_body_entered(body):
 	var endmessage = get_node('../Label4')
 	endmessage.z_index = 4
